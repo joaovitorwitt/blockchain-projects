@@ -2,8 +2,12 @@
 pragma solidity >=0.4.16 <0.9.0;
 
 contract ZombieFactory {
-    uint dnaDigits = 16;
 
+    // Events
+    // events are a way for the contract to communicate with the frontend
+    event NewZombie(uint zombieId, string name, uint dna);
+
+    uint dnaDigits = 16;
     // later we can we % to shorten an integer to 16 digits
     uint dnaModulus = 10**dnaDigits;
 
@@ -16,7 +20,21 @@ contract ZombieFactory {
     // 
     Zombie[] public zombies;
 
-    function createZombie(string memory _name, uint _dna) public {
+    function _createZombie(string memory _name, uint _dna) private {
         zombies.push(Zombie(_name, _dna));
+        uint id = zombies.length - 1;
+        // fire the event after the zombie is created and pushed into the array
+        emit NewZombie(id, _name, _dna);
+    }
+
+    function _generateRandomDna(string memory _str) private view returns (uint) {
+        uint rand = uint(keccak256(abi.encodePacked(_str)));
+        // since we only want 16 digits for the dna
+        return rand % dnaModulus;
+    }
+
+    function createRandomZombie(string memory _name) public {
+        uint randDna = _generateRandomDna(_name);
+        _createZombie(_name, randDna);
     }
 }
