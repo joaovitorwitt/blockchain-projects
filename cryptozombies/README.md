@@ -14,3 +14,16 @@ The first two digits are 38, and since we only have 7 head types, we do:
 
 Meaning this zombie will have the 4th type of head
 
+# Lesson 2
+
+make the app more game-like, making it multi-player, and other ways to create zombies
+
+## Adresses
+
+Ethereum blockchain is made up of accounts, and each accounts as an address.
+
+A unique identifier
+
+## Mappings
+
+mappings are a key-value store for storing and looking up data.
