@@ -47,3 +47,17 @@ refers to variables stored permanently on the blockchain
 ### Memory
 
 variables are temporary, and are erased between external function calls in the contract
+
+## More on Function Visibility
+
+## Internal
+
+internal functions are the same as private.
+
+But they are accessible to contracts that inherit from this contract
+
+## External
+
+External functions are the same as public.
+
+Except that they can only be called outside the contract
