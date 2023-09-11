@@ -17,8 +17,10 @@ contract ZombieFactory {
         uint dna;
     }
 
+    // array of zombies
     Zombie[] public zombies;
 
+    // zombie will have and id to look up the owner of the zombie
     mapping (uint => address) public zombieToOwner;
     mapping (address => uint) ownerZombieCount;
 
