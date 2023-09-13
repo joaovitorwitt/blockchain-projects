@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.4.16 <0.9.0;
 
-contract ZombieFactory {
+import "./Ownable.sol";
 
+contract ZombieFactory is Ownable {
     // Events
     // events are a way for the contract to communicate with the frontend
     event NewZombie(uint zombieId, string name, uint dna);
@@ -10,22 +11,27 @@ contract ZombieFactory {
     uint dnaDigits = 16;
     // later we can we % to shorten an integer to 16 digits
     uint dnaModulus = 10**dnaDigits;
+    uint cooldownTime = 1 days;
 
     // properties that zombies will have
     struct Zombie {
         string name;
         uint dna;
+        uint32 level;
+        // time period a zombie has to wait after feeding or attacking
+        uint32 readyTime;
     }
 
     // array of zombies
     Zombie[] public zombies;
 
-    // zombie will have and id to look up the owner of the zombie
+    // zombie will have and id to look up the owner of the zombie   
     mapping (uint => address) public zombieToOwner;
+    // how many zombies the person has
     mapping (address => uint) ownerZombieCount;
 
     function _createZombie(string memory _name, uint _dna) internal {
-        zombies.push(Zombie(_name, _dna));
+        zombies.push(Zombie(_name, _dna, 1, uint32(block.timestamp + cooldownTime)));
         uint id = zombies.length - 1;
 
         // store the address of the person who owns the zombie
