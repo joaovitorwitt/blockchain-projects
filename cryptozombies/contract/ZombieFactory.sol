@@ -20,6 +20,8 @@ contract ZombieFactory is Ownable {
         uint32 level;
         // time period a zombie has to wait after feeding or attacking
         uint32 readyTime;
+        uint16 winCount;
+        uint16 lossCount;
     }
 
     // array of zombies
@@ -31,7 +33,7 @@ contract ZombieFactory is Ownable {
     mapping (address => uint) ownerZombieCount;
 
     function _createZombie(string memory _name, uint _dna) internal {
-        zombies.push(Zombie(_name, _dna, 1, uint32(block.timestamp + cooldownTime)));
+        zombies.push(Zombie(_name, _dna, 1, uint32(block.timestamp + cooldownTime), 0, 0));
         uint id = zombies.length - 1;
 
         // store the address of the person who owns the zombie
